@@ -8,9 +8,9 @@ namespace UESAN.StoreDB.DOMAIN.Infrastructure.Repositories
     public class UserRepository : IUserRepository
     {
 
-        private readonly StoreDbContext _dbContext;
+        private readonly PromcoserContext _dbContext;
 
-        public UserRepository(StoreDbContext dbContext)
+        public UserRepository(PromcoserContext dbContext)
         {
             _dbContext = dbContext;
         }

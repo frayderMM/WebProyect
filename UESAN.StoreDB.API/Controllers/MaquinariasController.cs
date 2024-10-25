@@ -2,57 +2,61 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UESAN.StoreDB.DOMAIN.Core.Entities;
 using UESAN.StoreDB.DOMAIN.Infrastructure.Data;
 
-namespace UESAN.StoreDB.API.Controllers
+namespace PROMCOSER.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserScaffoldingController : ControllerBase
+    
+    public class MaquinariasController : ControllerBase
     {
+        
         private readonly PromcoserContext _context;
 
-        public UserScaffoldingController(PromcoserContext context)
+        public MaquinariasController(PromcoserContext context)
         {
             _context = context;
         }
+        [Authorize]
 
-        // GET: api/UserScaffolding
+        // GET: api/Maquinarias
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<Maquinaria>>> GetMaquinaria()
         {
-            return await _context.User.ToListAsync();
+            return await _context.Maquinaria.ToListAsync();
         }
 
-        // GET: api/UserScaffolding/5
+        // GET: api/Maquinarias/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<Maquinaria>> GetMaquinaria(long id)
         {
-            var user = await _context.User.FindAsync(id);
+            var maquinaria = await _context.Maquinaria.FindAsync(id);
 
-            if (user == null)
+            if (maquinaria == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return maquinaria;
         }
 
-        // PUT: api/UserScaffolding/5
+        // PUT: api/Maquinarias/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutMaquinaria(long id, Maquinaria maquinaria)
         {
-            if (id != user.Id)
+            if (id != maquinaria.IdMaquinaria)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(maquinaria).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +64,7 @@ namespace UESAN.StoreDB.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!MaquinariaExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +77,36 @@ namespace UESAN.StoreDB.API.Controllers
             return NoContent();
         }
 
-        // POST: api/UserScaffolding
+        // POST: api/Maquinarias
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<Maquinaria>> PostMaquinaria(Maquinaria maquinaria)
         {
-            _context.User.Add(user);
+            _context.Maquinaria.Add(maquinaria);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetMaquinaria", new { id = maquinaria.IdMaquinaria }, maquinaria);
         }
 
-        // DELETE: api/UserScaffolding/5
+        // DELETE: api/Maquinarias/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteMaquinaria(long id)
         {
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var maquinaria = await _context.Maquinaria.FindAsync(id);
+            if (maquinaria == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
+            _context.Maquinaria.Remove(maquinaria);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private bool MaquinariaExists(long id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Maquinaria.Any(e => e.IdMaquinaria == id);
         }
     }
 }

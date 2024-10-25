@@ -5,7 +5,7 @@ namespace UESAN.StoreDB.DOMAIN.Core.Entities;
 
 public partial class User
 {
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     public string? FirstName { get; set; }
 
@@ -25,7 +25,7 @@ public partial class User
 
     public string? Type { get; set; }
 
-    public virtual ICollection<Favorite> Favorite { get; set; } = new List<Favorite>();
+    public long? IdPersonal { get; set; }
 
-    public virtual ICollection<Orders> Orders { get; set; } = new List<Orders>();
+    public virtual Personal? IdPersonalNavigation { get; set; }
 }

@@ -30,7 +30,7 @@ namespace UESAN.StoreDB.DOMAIN.Core.Services
             var sendEmail = false;
             var userDTO = new UserResponseAuthDTO()
             {
-                Id = user.Id,
+                Id = (int)user.Id,
                 Email = email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
